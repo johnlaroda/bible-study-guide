@@ -10,6 +10,11 @@ function bibleApiProxy(apiKey) {
     name: 'bible-api-proxy',
     configureServer(server) {
       server.middlewares.use('/api/bible', (req, res) => {
+        if (!apiKey) {
+          res.writeHead(500, { 'Content-Type': 'application/json' })
+          res.end(JSON.stringify({ error: 'VITE_BIBLE_API_KEY is not configured. Add it to your .env file.' }))
+          return
+        }
         const targetUrl = `https://rest.api.bible${req.url}`
         const parsed = new URL(targetUrl)
 
