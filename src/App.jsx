@@ -307,7 +307,7 @@ function BibleReader({ initialBook, onBack }) {
       setChapters(data.filter(c => c.number !== 'intro'));
       setSelectedBook(book);
     } catch (err) {
-      setError('Failed to load chapters. Please try again.');
+      setError('Failed to load chapters. Make sure you have a .env file with your API key (copy .env.example to .env and restart the dev server).');
     } finally {
       setLoading(false);
     }
@@ -322,7 +322,7 @@ function BibleReader({ initialBook, onBack }) {
       setCopyright(data.copyright || '');
       setSelectedChapter(chapterId);
     } catch (err) {
-      setError('Failed to load chapter. Please try again.');
+      setError('Failed to load chapter. Check your .env file and API key configuration.');
     } finally {
       setLoading(false);
     }
