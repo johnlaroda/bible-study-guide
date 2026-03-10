@@ -1,10 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { books, startingRecommendations } from './bibleData.js';
+
+const API_KEY = import.meta.env.VITE_BIBLE_API_KEY;
+const BIBLE_ID = import.meta.env.VITE_BIBLE_ID;
+const API_BASE = 'https://rest.api.bible/v1';
 
 const categories = {
   Old: ["Law", "History", "Poetry", "Prophecy"],
   New: ["Gospel", "History", "Epistle", "Prophecy"]
 };
+
+async function fetchBibleAPI(path) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    headers: { 'api-key': API_KEY }
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  const json = await res.json();
+  return json.data;
+}
 
 function CrossIcon() {
   return (
@@ -63,6 +76,7 @@ function DevotionalCard() {
 function NavTabs({ activeView, setActiveView }) {
   const tabs = [
     { id: "home", label: "Books" },
+    { id: "read", label: "Read Bible" },
     { id: "start", label: "Where to Start" },
     { id: "progress", label: "My Progress" }
   ];
@@ -150,7 +164,7 @@ function BookListItem({ book, isCompleted, onSelect }) {
   );
 }
 
-function BookDetail({ book, isCompleted, onToggleComplete, onClose }) {
+function BookDetail({ book, isCompleted, onToggleComplete, onClose, onReadBook }) {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center p-4 pt-8 overflow-y-auto">
       <div className="bg-cream rounded-xl shadow-2xl max-w-2xl w-full my-4">
@@ -198,16 +212,24 @@ function BookDetail({ book, isCompleted, onToggleComplete, onClose }) {
             <p className="text-navy italic leading-relaxed">{book.keyVerse}</p>
           </div>
 
-          <button
-            onClick={() => onToggleComplete(book.name)}
-            className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-              isCompleted
-                ? "bg-green-600 text-white hover:bg-green-700"
-                : "bg-navy text-cream hover:bg-navy-light"
-            }`}
-          >
-            {isCompleted ? "✓ Marked as Studied" : "Mark as Studied"}
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => onReadBook(book)}
+              className="flex-1 py-3 rounded-lg font-semibold bg-gold text-navy hover:bg-gold-light transition-colors"
+            >
+              Read This Book
+            </button>
+            <button
+              onClick={() => onToggleComplete(book.name)}
+              className={`flex-1 py-3 rounded-lg font-semibold transition-colors ${
+                isCompleted
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-navy text-cream hover:bg-navy-light"
+              }`}
+            >
+              {isCompleted ? "✓ Studied" : "Mark as Studied"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -265,6 +287,188 @@ function BookList({ activeTab, completedBooks, onToggleComplete, onSelectBook, s
           </div>
         );
       })}
+    </div>
+  );
+}
+
+function BibleReader({ initialBook, onBack }) {
+  const [selectedBook, setSelectedBook] = useState(initialBook || null);
+  const [chapters, setChapters] = useState([]);
+  const [selectedChapter, setSelectedChapter] = useState(null);
+  const [chapterContent, setChapterContent] = useState('');
+  const [copyright, setCopyright] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [readerTab, setReaderTab] = useState("Old");
+
+  const loadChapters = useCallback(async (book) => {
+    setLoading(true);
+    setError(null);
+    setSelectedChapter(null);
+    setChapterContent('');
+    try {
+      const data = await fetchBibleAPI(`/bibles/${BIBLE_ID}/books/${book.apiId}/chapters`);
+      setChapters(data.filter(c => c.number !== 'intro'));
+      setSelectedBook(book);
+    } catch (err) {
+      setError('Failed to load chapters. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const loadChapter = useCallback(async (chapterId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchBibleAPI(`/bibles/${BIBLE_ID}/chapters/${chapterId}?content-type=text&include-verse-numbers=true`);
+      setChapterContent(data.content);
+      setCopyright(data.copyright || '');
+      setSelectedChapter(chapterId);
+    } catch (err) {
+      setError('Failed to load chapter. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (initialBook) loadChapters(initialBook);
+  }, [initialBook, loadChapters]);
+
+  if (!selectedBook) {
+    return (
+      <div className="space-y-4">
+        <div className="text-center mb-2">
+          <h2 className="text-xl font-bold text-navy">Read the Bible</h2>
+          <p className="text-navy/60 text-sm">Select a book to start reading (NIV)</p>
+        </div>
+
+        <div className="flex gap-2 mb-4">
+          {["Old", "New"].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setReaderTab(tab)}
+              className={`flex-1 py-2 rounded-lg font-semibold text-sm transition-colors ${
+                readerTab === tab
+                  ? "bg-gold text-navy shadow-sm"
+                  : "bg-white text-navy border border-navy/20 hover:bg-cream"
+              }`}
+            >
+              {tab} Testament
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+          {books.filter(b => b.testament === readerTab).map(book => (
+            <button
+              key={book.name}
+              onClick={() => loadChapters(book)}
+              className="bg-white text-navy px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-gold-light/30 transition-colors border border-navy/10 text-left"
+            >
+              {book.name}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (selectedChapter && chapterContent) {
+    const chapterNum = selectedChapter.split('.')[1];
+    const currentIdx = chapters.findIndex(c => c.id === selectedChapter);
+    const prevChapter = currentIdx > 0 ? chapters[currentIdx - 1] : null;
+    const nextChapter = currentIdx < chapters.length - 1 ? chapters[currentIdx + 1] : null;
+
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <button onClick={() => { setSelectedChapter(null); setChapterContent(''); }} className="text-navy/60 hover:text-navy transition-colors">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h2 className="text-lg font-bold text-navy">{selectedBook.name} — Chapter {chapterNum}</h2>
+        </div>
+
+        <div className="bg-white rounded-lg p-5 sm:p-8 shadow-sm border-l-4 border-gold">
+          <div className="text-navy leading-loose text-base sm:text-lg whitespace-pre-wrap font-serif">
+            {chapterContent}
+          </div>
+        </div>
+
+        {copyright && (
+          <p className="text-xs text-navy/40 text-center px-4">{copyright}</p>
+        )}
+
+        <div className="flex gap-3">
+          <button
+            onClick={() => prevChapter && loadChapter(prevChapter.id)}
+            disabled={!prevChapter}
+            className={`flex-1 py-3 rounded-lg font-semibold text-sm transition-colors ${
+              prevChapter
+                ? "bg-navy text-cream hover:bg-navy-light"
+                : "bg-navy/10 text-navy/30 cursor-not-allowed"
+            }`}
+          >
+            Previous Chapter
+          </button>
+          <button
+            onClick={() => nextChapter && loadChapter(nextChapter.id)}
+            disabled={!nextChapter}
+            className={`flex-1 py-3 rounded-lg font-semibold text-sm transition-colors ${
+              nextChapter
+                ? "bg-gold text-navy hover:bg-gold-light"
+                : "bg-navy/10 text-navy/30 cursor-not-allowed"
+            }`}
+          >
+            Next Chapter
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <button onClick={() => { setSelectedBook(null); setChapters([]); }} className="text-navy/60 hover:text-navy transition-colors">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h2 className="text-lg font-bold text-navy">{selectedBook.name}</h2>
+        <CategoryBadge category={selectedBook.category} />
+      </div>
+
+      {loading && (
+        <div className="text-center py-8">
+          <div className="inline-block w-8 h-8 border-4 border-navy/20 border-t-gold rounded-full animate-spin" />
+          <p className="text-navy/50 mt-2 text-sm">Loading...</p>
+        </div>
+      )}
+
+      {error && (
+        <div className="bg-red-50 text-red-700 p-4 rounded-lg text-sm">
+          {error}
+          <button onClick={() => loadChapters(selectedBook)} className="ml-2 underline">Retry</button>
+        </div>
+      )}
+
+      {!loading && !error && chapters.length > 0 && (
+        <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
+          {chapters.map(ch => (
+            <button
+              key={ch.id}
+              onClick={() => loadChapter(ch.id)}
+              className="bg-white text-navy py-3 rounded-lg text-sm font-bold hover:bg-gold-light/30 transition-colors border border-navy/10 hover:border-gold"
+            >
+              {ch.number}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -380,7 +584,7 @@ function Footer() {
   return (
     <footer className="bg-navy text-cream/60 text-center text-xs py-4 mt-8">
       <p>Bible Study Companion — Read, Study, Grow</p>
-      <p className="mt-1 text-cream/40">All Scripture references from the NIV</p>
+      <p className="mt-1 text-cream/40">Scripture text from the NIV via API.Bible</p>
     </footer>
   );
 }
@@ -390,6 +594,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("Old");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBook, setSelectedBook] = useState(null);
+  const [readerBook, setReaderBook] = useState(null);
   const [completedBooks, setCompletedBooks] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("completedBooks") || "[]");
@@ -408,6 +613,12 @@ export default function App() {
         ? prev.filter(n => n !== bookName)
         : [...prev, bookName]
     );
+  };
+
+  const handleReadBook = (book) => {
+    setSelectedBook(null);
+    setReaderBook(book);
+    setActiveView("read");
   };
 
   return (
@@ -431,6 +642,13 @@ export default function App() {
           </>
         )}
 
+        {activeView === "read" && (
+          <BibleReader
+            initialBook={readerBook}
+            onBack={() => { setReaderBook(null); setActiveView("home"); }}
+          />
+        )}
+
         {activeView === "start" && (
           <WhereToStart onSelectBook={setSelectedBook} />
         )}
@@ -449,6 +667,7 @@ export default function App() {
           isCompleted={completedBooks.includes(selectedBook.name)}
           onToggleComplete={toggleComplete}
           onClose={() => setSelectedBook(null)}
+          onReadBook={handleReadBook}
         />
       )}
 

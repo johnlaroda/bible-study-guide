@@ -3,6 +3,7 @@ export const books = [
   // --- Pentateuch / Law ---
   {
     name: "Genesis",
+    apiId: "GEN",
     testament: "Old",
     category: "Law",
     author: "Moses",
@@ -14,6 +15,7 @@ export const books = [
   },
   {
     name: "Exodus",
+    apiId: "EXO",
     testament: "Old",
     category: "Law",
     author: "Moses",
@@ -25,6 +27,7 @@ export const books = [
   },
   {
     name: "Leviticus",
+    apiId: "LEV",
     testament: "Old",
     category: "Law",
     author: "Moses",
@@ -36,6 +39,7 @@ export const books = [
   },
   {
     name: "Numbers",
+    apiId: "NUM",
     testament: "Old",
     category: "Law",
     author: "Moses",
@@ -47,6 +51,7 @@ export const books = [
   },
   {
     name: "Deuteronomy",
+    apiId: "DEU",
     testament: "Old",
     category: "Law",
     author: "Moses",
@@ -60,6 +65,7 @@ export const books = [
   // --- Historical Books ---
   {
     name: "Joshua",
+    apiId: "JOS",
     testament: "Old",
     category: "History",
     author: "Joshua",
@@ -71,6 +77,7 @@ export const books = [
   },
   {
     name: "Judges",
+    apiId: "JDG",
     testament: "Old",
     category: "History",
     author: "Possibly Samuel",
@@ -82,6 +89,7 @@ export const books = [
   },
   {
     name: "Ruth",
+    apiId: "RUT",
     testament: "Old",
     category: "History",
     author: "Unknown (possibly Samuel)",
@@ -93,6 +101,7 @@ export const books = [
   },
   {
     name: "1 Samuel",
+    apiId: "1SA",
     testament: "Old",
     category: "History",
     author: "Samuel, Nathan, Gad",
@@ -104,6 +113,7 @@ export const books = [
   },
   {
     name: "2 Samuel",
+    apiId: "2SA",
     testament: "Old",
     category: "History",
     author: "Unknown (Nathan, Gad)",
@@ -115,6 +125,7 @@ export const books = [
   },
   {
     name: "1 Kings",
+    apiId: "1KI",
     testament: "Old",
     category: "History",
     author: "Unknown (possibly Jeremiah)",
@@ -126,6 +137,7 @@ export const books = [
   },
   {
     name: "2 Kings",
+    apiId: "2KI",
     testament: "Old",
     category: "History",
     author: "Unknown (possibly Jeremiah)",
@@ -137,6 +149,7 @@ export const books = [
   },
   {
     name: "1 Chronicles",
+    apiId: "1CH",
     testament: "Old",
     category: "History",
     author: "Ezra (traditionally)",
@@ -148,6 +161,7 @@ export const books = [
   },
   {
     name: "2 Chronicles",
+    apiId: "2CH",
     testament: "Old",
     category: "History",
     author: "Ezra (traditionally)",
@@ -159,6 +173,7 @@ export const books = [
   },
   {
     name: "Ezra",
+    apiId: "EZR",
     testament: "Old",
     category: "History",
     author: "Ezra",
@@ -170,6 +185,7 @@ export const books = [
   },
   {
     name: "Nehemiah",
+    apiId: "NEH",
     testament: "Old",
     category: "History",
     author: "Nehemiah",
@@ -181,6 +197,7 @@ export const books = [
   },
   {
     name: "Esther",
+    apiId: "EST",
     testament: "Old",
     category: "History",
     author: "Unknown",
@@ -194,6 +211,7 @@ export const books = [
   // --- Poetry / Wisdom ---
   {
     name: "Job",
+    apiId: "JOB",
     testament: "Old",
     category: "Poetry",
     author: "Unknown",
@@ -205,6 +223,7 @@ export const books = [
   },
   {
     name: "Psalms",
+    apiId: "PSA",
     testament: "Old",
     category: "Poetry",
     author: "David, Asaph, Sons of Korah, and others",
@@ -216,6 +235,7 @@ export const books = [
   },
   {
     name: "Proverbs",
+    apiId: "PRO",
     testament: "Old",
     category: "Poetry",
     author: "Solomon, Agur, Lemuel",
@@ -227,6 +247,7 @@ export const books = [
   },
   {
     name: "Ecclesiastes",
+    apiId: "ECC",
     testament: "Old",
     category: "Poetry",
     author: "Solomon (traditionally)",
@@ -238,6 +259,7 @@ export const books = [
   },
   {
     name: "Song of Solomon",
+    apiId: "SNG",
     testament: "Old",
     category: "Poetry",
     author: "Solomon",
@@ -251,6 +273,7 @@ export const books = [
   // --- Major Prophets ---
   {
     name: "Isaiah",
+    apiId: "ISA",
     testament: "Old",
     category: "Prophecy",
     author: "Isaiah",
@@ -262,6 +285,7 @@ export const books = [
   },
   {
     name: "Jeremiah",
+    apiId: "JER",
     testament: "Old",
     category: "Prophecy",
     author: "Jeremiah",
@@ -273,6 +297,7 @@ export const books = [
   },
   {
     name: "Lamentations",
+    apiId: "LAM",
     testament: "Old",
     category: "Prophecy",
     author: "Jeremiah",
@@ -284,6 +309,7 @@ export const books = [
   },
   {
     name: "Ezekiel",
+    apiId: "EZK",
     testament: "Old",
     category: "Prophecy",
     author: "Ezekiel",
@@ -295,6 +321,7 @@ export const books = [
   },
   {
     name: "Daniel",
+    apiId: "DAN",
     testament: "Old",
     category: "Prophecy",
     author: "Daniel",
@@ -308,6 +335,7 @@ export const books = [
   // --- Minor Prophets ---
   {
     name: "Hosea",
+    apiId: "HOS",
     testament: "Old",
     category: "Prophecy",
     author: "Hosea",
@@ -319,6 +347,7 @@ export const books = [
   },
   {
     name: "Joel",
+    apiId: "JOL",
     testament: "Old",
     category: "Prophecy",
     author: "Joel",
@@ -330,6 +359,7 @@ export const books = [
   },
   {
     name: "Amos",
+    apiId: "AMO",
     testament: "Old",
     category: "Prophecy",
     author: "Amos",
@@ -341,6 +371,7 @@ export const books = [
   },
   {
     name: "Obadiah",
+    apiId: "OBA",
     testament: "Old",
     category: "Prophecy",
     author: "Obadiah",
@@ -352,6 +383,7 @@ export const books = [
   },
   {
     name: "Jonah",
+    apiId: "JON",
     testament: "Old",
     category: "Prophecy",
     author: "Jonah",
@@ -363,6 +395,7 @@ export const books = [
   },
   {
     name: "Micah",
+    apiId: "MIC",
     testament: "Old",
     category: "Prophecy",
     author: "Micah",
@@ -374,6 +407,7 @@ export const books = [
   },
   {
     name: "Nahum",
+    apiId: "NAM",
     testament: "Old",
     category: "Prophecy",
     author: "Nahum",
@@ -385,6 +419,7 @@ export const books = [
   },
   {
     name: "Habakkuk",
+    apiId: "HAB",
     testament: "Old",
     category: "Prophecy",
     author: "Habakkuk",
@@ -396,6 +431,7 @@ export const books = [
   },
   {
     name: "Zephaniah",
+    apiId: "ZEP",
     testament: "Old",
     category: "Prophecy",
     author: "Zephaniah",
@@ -407,6 +443,7 @@ export const books = [
   },
   {
     name: "Haggai",
+    apiId: "HAG",
     testament: "Old",
     category: "Prophecy",
     author: "Haggai",
@@ -418,6 +455,7 @@ export const books = [
   },
   {
     name: "Zechariah",
+    apiId: "ZEC",
     testament: "Old",
     category: "Prophecy",
     author: "Zechariah",
@@ -429,6 +467,7 @@ export const books = [
   },
   {
     name: "Malachi",
+    apiId: "MAL",
     testament: "Old",
     category: "Prophecy",
     author: "Malachi",
@@ -443,6 +482,7 @@ export const books = [
   // --- Gospels ---
   {
     name: "Matthew",
+    apiId: "MAT",
     testament: "New",
     category: "Gospel",
     author: "Matthew (Levi)",
@@ -454,6 +494,7 @@ export const books = [
   },
   {
     name: "Mark",
+    apiId: "MRK",
     testament: "New",
     category: "Gospel",
     author: "John Mark",
@@ -465,6 +506,7 @@ export const books = [
   },
   {
     name: "Luke",
+    apiId: "LUK",
     testament: "New",
     category: "Gospel",
     author: "Luke (physician)",
@@ -476,6 +518,7 @@ export const books = [
   },
   {
     name: "John",
+    apiId: "JHN",
     testament: "New",
     category: "Gospel",
     author: "John (the apostle)",
@@ -489,6 +532,7 @@ export const books = [
   // --- History ---
   {
     name: "Acts",
+    apiId: "ACT",
     testament: "New",
     category: "History",
     author: "Luke",
@@ -502,6 +546,7 @@ export const books = [
   // --- Pauline Epistles ---
   {
     name: "Romans",
+    apiId: "ROM",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -513,6 +558,7 @@ export const books = [
   },
   {
     name: "1 Corinthians",
+    apiId: "1CO",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -524,6 +570,7 @@ export const books = [
   },
   {
     name: "2 Corinthians",
+    apiId: "2CO",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -535,6 +582,7 @@ export const books = [
   },
   {
     name: "Galatians",
+    apiId: "GAL",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -546,6 +594,7 @@ export const books = [
   },
   {
     name: "Ephesians",
+    apiId: "EPH",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -557,6 +606,7 @@ export const books = [
   },
   {
     name: "Philippians",
+    apiId: "PHP",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -568,6 +618,7 @@ export const books = [
   },
   {
     name: "Colossians",
+    apiId: "COL",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -579,6 +630,7 @@ export const books = [
   },
   {
     name: "1 Thessalonians",
+    apiId: "1TH",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -590,6 +642,7 @@ export const books = [
   },
   {
     name: "2 Thessalonians",
+    apiId: "2TH",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -601,6 +654,7 @@ export const books = [
   },
   {
     name: "1 Timothy",
+    apiId: "1TI",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -612,6 +666,7 @@ export const books = [
   },
   {
     name: "2 Timothy",
+    apiId: "2TI",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -623,6 +678,7 @@ export const books = [
   },
   {
     name: "Titus",
+    apiId: "TIT",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -634,6 +690,7 @@ export const books = [
   },
   {
     name: "Philemon",
+    apiId: "PHM",
     testament: "New",
     category: "Epistle",
     author: "Paul",
@@ -647,6 +704,7 @@ export const books = [
   // --- General Epistles ---
   {
     name: "Hebrews",
+    apiId: "HEB",
     testament: "New",
     category: "Epistle",
     author: "Unknown",
@@ -658,6 +716,7 @@ export const books = [
   },
   {
     name: "James",
+    apiId: "JAS",
     testament: "New",
     category: "Epistle",
     author: "James (brother of Jesus)",
@@ -669,6 +728,7 @@ export const books = [
   },
   {
     name: "1 Peter",
+    apiId: "1PE",
     testament: "New",
     category: "Epistle",
     author: "Peter",
@@ -680,6 +740,7 @@ export const books = [
   },
   {
     name: "2 Peter",
+    apiId: "2PE",
     testament: "New",
     category: "Epistle",
     author: "Peter",
@@ -691,6 +752,7 @@ export const books = [
   },
   {
     name: "1 John",
+    apiId: "1JN",
     testament: "New",
     category: "Epistle",
     author: "John (the apostle)",
@@ -702,6 +764,7 @@ export const books = [
   },
   {
     name: "2 John",
+    apiId: "2JN",
     testament: "New",
     category: "Epistle",
     author: "John (the apostle)",
@@ -713,6 +776,7 @@ export const books = [
   },
   {
     name: "3 John",
+    apiId: "3JN",
     testament: "New",
     category: "Epistle",
     author: "John (the apostle)",
@@ -724,6 +788,7 @@ export const books = [
   },
   {
     name: "Jude",
+    apiId: "JUD",
     testament: "New",
     category: "Epistle",
     author: "Jude (brother of Jesus)",
@@ -737,6 +802,7 @@ export const books = [
   // --- Prophecy ---
   {
     name: "Revelation",
+    apiId: "REV",
     testament: "New",
     category: "Prophecy",
     author: "John (the apostle)",
