@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { books, startingRecommendations } from './bibleData.js';
 
-const BIBLE_ID = import.meta.env.VITE_BIBLE_ID;
+const BIBLE_API_KEY = import.meta.env.VITE_BIBLE_API_KEY || 'MuXHDa5Sv--oc7c5Sw7fV';
+const BIBLE_ID = import.meta.env.VITE_BIBLE_ID || '78a9f6124f344018-01';
 
 const categories = {
   Old: ["Law", "History", "Poetry", "Prophecy"],
@@ -9,7 +10,9 @@ const categories = {
 };
 
 async function fetchBibleAPI(path) {
-  const res = await fetch(`/api/bible/v1${path}`);
+  const res = await fetch(`https://rest.api.bible/v1${path}`, {
+    headers: { 'api-key': BIBLE_API_KEY }
+  });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
   return json.data;
